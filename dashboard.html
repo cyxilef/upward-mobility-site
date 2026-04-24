@@ -55,6 +55,8 @@ tract_df[impute_cols] = KNNImputer(n_neighbors=5).fit_transform(tract_df[impute_
           </table>
         </div>
       </details>
+      <h3>Category Interpretation Guide</h3>
+      <div id="context-category-guide" class="card-grid-3"></div>
       <div class="code-example"><code># Cluster-to-label mapping
 ordered = cluster_summary.sort_values("mob_up").index.tolist()
 label_map = {

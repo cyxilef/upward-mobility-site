@@ -746,6 +746,53 @@ function renderClusterTable(rows) {
     .join("");
 }
 
+function renderContextCategoryGuide(rows) {
+  const host = document.getElementById("context-category-guide");
+  if (!host) return;
+  if (!rows.length) {
+    host.innerHTML = `<div class="card compact">Data not available.</div>`;
+    return;
+  }
+  const mean = (vals) => (vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0);
+  const global = {
+    pov: mean(rows.map((r) => Number(r.pov20 || 0))),
+    mob: mean(rows.map((r) => Number(r.mob_up || 0))),
+    inc: mean(rows.map((r) => Number(r.inc20 || 0))),
+    gap: mean(rows.map((r) => Number(r.opp_gap || 0)))
+  };
+  const level = (value, avg, positiveHigh = true) => {
+    const v = Number(value || 0);
+    const delta = avg === 0 ? 0 : (v - avg) / Math.abs(avg);
+    if (positiveHigh) {
+      if (delta > 0.12) return "High";
+      if (delta < -0.12) return "Low";
+      return "Moderate";
+    }
+    if (delta > 0.12) return "Higher concern";
+    if (delta < -0.12) return "Lower concern";
+    return "Moderate concern";
+  };
+
+  const ordered = [...rows].sort((a, b) => Number(a.mob_up || 0) - Number(b.mob_up || 0));
+  host.innerHTML = ordered
+    .map((r) => {
+      const povertyLevel = level(r.pov20, global.pov, false);
+      const mobilityLevel = level(r.mob_up, global.mob, true);
+      const incomeLevel = level(r.inc20, global.inc, true);
+      const gapLevel = level(r.opp_gap, global.gap, false);
+      return `
+        <article class="card compact definition-card">
+          <h3>${r.youth_group}</h3>
+          <p><strong>Poverty:</strong> ${povertyLevel} (${formatPctFromUnit(r.pov20)})</p>
+          <p><strong>Mobility:</strong> ${mobilityLevel} (${Number(r.mob_up || 0).toFixed(3)})</p>
+          <p><strong>Income:</strong> ${incomeLevel} (${formatMoney(r.inc20 || 0)})</p>
+          <p><strong>Opportunity Gap:</strong> ${gapLevel} (${Number(r.opp_gap || 0).toFixed(3)})</p>
+        </article>
+      `;
+    })
+    .join("");
+}
+
 function renderRecommendationCards(rows, group) {
   const host = document.getElementById("recs-cards");
   if (!host) return;
@@ -1081,6 +1128,7 @@ function renderImputationStatus(nullAuditRows, tracts) {
   const host = document.getElementById("imputation-status");
   if (!host) return;
   const tractCount = (tracts || []).length;
+  const estimatedFilledFrom16Pct = Math.round(tractCount * 0.16);
   const mobilityAudit = (nullAuditRows || []).find((r) => String(r.column_name || "").toLowerCase() === "mob_up");
   if (mobilityAudit) {
     host.innerHTML = `
@@ -1090,6 +1138,10 @@ function renderImputationStatus(nullAuditRows, tracts) {
         mobilityAudit.null_pct || 0
       ).toFixed(2)}%)<br />
       Round 2 applies KNN imputation to prevent missing mobility values from breaking recommendations.
+      <br /><br />
+      <strong>Round 2 context note:</strong> Earlier pipeline audits indicated roughly 16% missing mobility before imputation.
+      On the current tract export (${tractCount.toLocaleString()} rows), that corresponds to about ${estimatedFilledFrom16Pct.toLocaleString()}
+      values that would need KNN filling in the pre-imputation stage.
     `;
     return;
   }
@@ -1098,6 +1150,9 @@ function renderImputationStatus(nullAuditRows, tracts) {
     KNN imputation is implemented in the Round 2 pipeline to handle missing mobility values.<br />
     Current tract export includes ${tractCount.toLocaleString()} rows in post-processing form.<br />
     Pre-imputation <code>mob_up</code> null audit is not available in this web export.
+    <br /><br />
+    <strong>Round 2 context note:</strong> Earlier pipeline audits indicated roughly 16% missing mobility before imputation.
+    On ${tractCount.toLocaleString()} tracts, that is approximately ${estimatedFilledFrom16Pct.toLocaleString()} values filled by KNN.
   `;
 }
 
@@ -1355,6 +1410,7 @@ async function init() {
       `;
     }
     renderClusterTable(clusterRows);
+    renderContextCategoryGuide(clusterRows);
     renderOccupationExplorer(round2Jobs);
     renderJobRiskLookup(round2Jobs);
     renderResources(resourcesRows, coverageRows);
