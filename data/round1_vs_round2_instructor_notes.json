@@ -1,0 +1,20 @@
+{
+    "round1": {
+        "model1": "Supervised Random Forest on 25 labeled occupations with CV/test metrics.",
+        "model2": "KMeans youth grouping on tract-level features and weighted career matching.",
+        "known_issues": [
+            "Missing mobility values in tract data before imputation approach.",
+            "Small occupation sample (25 jobs) limits production coverage.",
+            "No holdout-state validation in this round.",
+            "College affordability integration limited in Round 1."
+        ]
+    },
+    "round2": {
+        "model1": "Rule-based interpretable risk scoring over full O*NET occupation set (risk_score 0-4 + risk_label).",
+        "model2": "KNN-imputed tract mobility + KMeans youth groups + recommendation engine with group-specific weights.",
+        "limitations": [
+            "Education outcomes use tract/state-level aggregated fields, not school-level recommendations.",
+            "No supervised accuracy metric for rule-based Round 2 by design."
+        ]
+    }
+}

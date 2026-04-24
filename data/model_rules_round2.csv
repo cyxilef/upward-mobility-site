@@ -1,0 +1,5 @@
+rule_id,rule_description,condition_expression,points_added,source
+R1,High proportion of routine cognitive tasks,routine_cognitive_tasks >= 0.40,1,compute_risk_score
+R2,Low proportion of non-routine cognitive tasks,nonroutine_cognitive_tasks <= 0.20,1,compute_risk_score
+R3,Low proportion of social tasks,social_tasks <= 0.10,1,compute_risk_score
+R4,Lower job zone (less education required),job_zone <= 2.0,1,compute_risk_score

@@ -1,0 +1,9 @@
+table_name,column_name,null_count,null_pct
+tract_df_neighborhood_data,mob_up,0,0.0
+tract_df_neighborhood_data,opp_gap,0,0.0
+tract_df_neighborhood_data,sc_cost_mean,0,0.0
+tract_df_neighborhood_data,sc_earn10_mean,0,0.0
+tract_df_neighborhood_data,youth_group,0,0.0
+job_df_full_occupations,job_zone,93,9.153543307086615
+job_df_full_occupations,risk_score,0,0.0
+job_df_full_occupations,risk_label,0,0.0
