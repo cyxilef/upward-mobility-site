@@ -20,15 +20,27 @@
   </nav>
   <main class="container page-main">
     <section class="section page-intro alt-bg">
-      <h1>Dashboard</h1>
-      <p class="section-note">Second step: raw data becomes understandable metrics for cost, earnings, and mobility.</p>
-      <div id="dashboard-evidence" class="metrics"></div>
-      <div id="dashboard-metrics" class="stats-grid"></div>
-      <div class="code-example"><code>// Dashboard cards are group-level means
+      <div class="with-side-key">
+        <div>
+          <h1>Dashboard</h1>
+          <p class="section-note">Second step: raw data becomes understandable metrics for cost, earnings, and mobility.</p>
+          <div id="dashboard-evidence" class="metrics"></div>
+          <div id="dashboard-metrics" class="stats-grid"></div>
+          <div class="code-example"><code>// Dashboard cards are group-level means
 avg_mob_up   = mean(mob_up by youth_group)
 avg_inc20    = mean(inc20 by youth_group)
 avg_pov20    = mean(pov20 by youth_group)
 mobility_gap = max(avg_mob_up) - min(avg_mob_up)</code></div>
+        </div>
+        <aside class="card side-key">
+          <h3>Interpretation Key</h3>
+          <p><strong>Poverty (`pov20`):</strong> shown as percent; higher means more economic constraint.</p>
+          <p><strong>Mobility (`mob_up`):</strong> 0-1; higher means stronger upward mobility context.</p>
+          <p><strong>Income (`inc20`):</strong> median household income in USD; higher means stronger earning context.</p>
+          <p><strong>Opportunity Gap (`opp_gap`):</strong> disparity index; larger magnitude means wider opportunity difference.</p>
+          <p><strong>Cost/Earnings fields:</strong> shown in USD group averages for ROI context.</p>
+        </aside>
+      </div>
     </section>
 
     <section class="section">

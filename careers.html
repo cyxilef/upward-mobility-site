@@ -20,30 +20,52 @@
   </nav>
   <main class="container page-main">
     <section class="section page-intro alt-bg">
-      <h1>Full Job Risk Model</h1>
-      <p class="section-note">
-        Third step: compare occupations and pathways in a more informed way using risk and fit logic.
-      </p>
-      <div id="careers-evidence" class="metrics"></div>
-      <div class="card compact">
-        <h3>How Risk Score Is Calculated</h3>
-        <ul class="calc-list">
-          <li>+1 if <code>routine_cognitive_tasks &gt;= 0.40</code></li>
-          <li>+1 if <code>nonroutine_cognitive_tasks &lt;= 0.20</code></li>
-          <li>+1 if <code>social_tasks &lt;= 0.10</code></li>
-          <li>+1 if <code>job_zone &lt;= 2</code></li>
-        </ul>
-        <code class="formula">risk_label = High (score >= 3), Moderate (score >= 2), Low (score < 2)</code>
-      </div>
-      <label for="job-risk-search">Search Occupation</label>
-      <input id="job-risk-search" type="text" placeholder="Example: nurse, teacher, analyst..." />
-      <div id="job-risk-result"></div>
-      <div class="code-example"><code># Rule-based risk scoring
+      <div class="with-side-key">
+        <div>
+          <h1>Full Job Risk Model</h1>
+          <p class="section-note">
+            Third step: compare occupations and pathways in a more informed way using risk and fit logic.
+          </p>
+          <div id="careers-evidence" class="metrics"></div>
+          <div class="card compact">
+            <h3>How Risk Score Is Calculated</h3>
+            <ul class="calc-list">
+              <li>+1 if <code>routine_cognitive_tasks &gt;= 0.40</code></li>
+              <li>+1 if <code>nonroutine_cognitive_tasks &lt;= 0.20</code></li>
+              <li>+1 if <code>social_tasks &lt;= 0.10</code></li>
+              <li>+1 if <code>job_zone &lt;= 2</code></li>
+            </ul>
+            <code class="formula">risk_label = High (score >= 3), Moderate (score >= 2), Low (score < 2)</code>
+          </div>
+          <label for="job-risk-search">Search Occupation</label>
+          <input id="job-risk-search" type="text" placeholder="Example: nurse, teacher, analyst..." />
+          <div id="job-risk-result"></div>
+          <div class="code-example"><code># Rule-based risk scoring
 score = 0
 if routine_cognitive_tasks >= 0.40: score += 1
 if nonroutine_cognitive_tasks <= 0.20: score += 1
 if social_tasks <= 0.10: score += 1
 if job_zone <= 2: score += 1</code></div>
+        </div>
+        <aside class="card side-key">
+          <h3>Interpretation Key</h3>
+          <p><strong>Risk Score (0-4):</strong> higher means higher automation/displacement exposure.</p>
+          <ul class="key-list">
+            <li><strong>Low:</strong> score &lt; 2</li>
+            <li><strong>Moderate:</strong> score = 2</li>
+            <li><strong>High:</strong> score &gt;= 3</li>
+          </ul>
+          <p><strong>Job Zone (1-5):</strong> preparation level required for entry.</p>
+          <ul class="key-list">
+            <li><strong>1:</strong> little/no preparation</li>
+            <li><strong>2:</strong> some preparation</li>
+            <li><strong>3:</strong> medium preparation</li>
+            <li><strong>4:</strong> considerable preparation</li>
+            <li><strong>5:</strong> extensive preparation</li>
+          </ul>
+          <p><strong>Task feature decimals (0-1):</strong> share of task statements matching that category.</p>
+        </aside>
+      </div>
     </section>
 
     <section class="section page-intro alt-bg" id="career-recommendations">
