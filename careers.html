@@ -63,7 +63,15 @@ if job_zone <= 2: score += 1</code></div>
             <li><strong>4:</strong> considerable preparation</li>
             <li><strong>5:</strong> extensive preparation</li>
           </ul>
-          <p><strong>Task feature decimals (0-1):</strong> share of task statements matching that category.</p>
+          <p><strong>Routine / Social (0-1):</strong> share of task statements matching keyword rules for that category.</p>
+          <h3>How Determined</h3>
+          <ul class="key-list">
+            <li><strong>Routine:</strong> mean of statement-level <code>routine_flag</code> per occupation.</li>
+            <li><strong>Social:</strong> mean of statement-level <code>social_flag</code> per occupation.</li>
+            <li><strong>Risk Score:</strong> +1 each for rule triggers on routine/nonroutine/social/job zone.</li>
+            <li><strong>Risk Label:</strong> High if score &gt;=3, Moderate if score=2, Low if score&lt;2.</li>
+            <li><strong>Job Zone:</strong> imported from O*NET job preparation level (not estimated by the model).</li>
+          </ul>
         </aside>
       </div>
     </section>

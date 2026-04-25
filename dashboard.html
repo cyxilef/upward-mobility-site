@@ -39,6 +39,12 @@ mobility_gap = max(avg_mob_up) - min(avg_mob_up)</code></div>
           <p><strong>Income (`inc20`):</strong> median household income in USD; higher means stronger earning context.</p>
           <p><strong>Opportunity Gap (`opp_gap`):</strong> disparity index; larger magnitude means wider opportunity difference.</p>
           <p><strong>Cost/Earnings fields:</strong> shown in USD group averages for ROI context.</p>
+          <h3>How Determined</h3>
+          <ul class="key-list">
+            <li><strong>Dashboard values:</strong> group means from tract rows (by <code>youth_group</code>).</li>
+            <li><strong>Poverty/Mobility/Income/Opportunity Gap cards:</strong> computed from <code>mean(pov20)</code>, <code>mean(mob_up)</code>, <code>mean(inc20)</code>, <code>mean(opp_gap)</code>.</li>
+            <li><strong>Mobility gap:</strong> <code>max(group avg mob_up) - min(group avg mob_up)</code>.</li>
+          </ul>
         </aside>
       </div>
     </section>
@@ -58,6 +64,12 @@ tract_df[impute_cols] = KNNImputer(n_neighbors=5).fit_transform(tract_df[impute_
     <section class="section">
       <h2>Neighborhood Segmentation</h2>
       <div class="segment-chips"><span>Very Disadvantaged</span><span>Disadvantaged</span><span>Moderate Opportunity</span><span>Higher Opportunity</span></div>
+      <div class="metrics">
+        <strong>How these four categories are determined</strong><br />
+        KMeans creates 4 clusters from <code>pov20</code>, <code>mob_up</code>, <code>inc20</code>, and <code>opp_gap</code>.
+        Clusters are then ordered by average <code>mob_up</code> from lowest to highest and labeled:
+        Very Disadvantaged -> Disadvantaged -> Moderate Opportunity -> Higher Opportunity.
+      </div>
       <details class="card technical" open>
         <summary>Youth Group Profile Table</summary>
         <div class="table-wrap">
